@@ -1,3 +1,4 @@
+index.html
 # Central_Park_Squirrel_Analysis
 This project explores the squirrel census data. 
 
