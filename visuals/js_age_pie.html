@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Pie Chart - JavaScript</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Age Distribution (JavaScript Chart.js)</h1>
+    <canvas id="ageChart" width="400" height="200"></canvas>
+    <script>
+        // Data from Python export
+        const data = {
+            "ages": {"Adult": 2561, "Juvenile": 330, "None": 132}
+        };
+
+        const ctx = document.getElementById('ageChart').getContext('2d');
+        const ageChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: Object.keys(data.ages),
+                datasets: [{
+                    label: 'Count',
+                    data: Object.values(data.ages),
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 205, 86, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 205, 86, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Age Distribution'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

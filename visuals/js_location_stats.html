@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location Stats - JavaScript</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Location Statistics - JavaScript Chart.js</h1>
+    <div style="display: flex; justify-content: space-around;">
+        <div>
+            <h3>Longitude Range</h3>
+            <p id="lonRange"></p>
+        </div>
+        <div>
+            <h3>Latitude Range</h3>
+            <p id="latRange"></p>
+        </div>
+        <div>
+            <h3>Average Measurement</h3>
+            <p id="avgMeasurement"></p>
+        </div>
+    </div>
+    <canvas id="statsChart" width="400" height="200"></canvas>
+    <script>
+        // Data from Python export
+        const data = {
+            "location_stats": {
+                "longitude_range": [-73.97428114849, -73.95613449379],
+                "latitude_range": [40.77553361908, 40.79408238841],
+                "measurement_avg": 11.775
+            }
+        };
+
+        // Display stats
+        document.getElementById('lonRange').textContent = `${data.location_stats.longitude_range[0].toFixed(4)} to ${data.location_stats.longitude_range[1].toFixed(4)}`;
+        document.getElementById('latRange').textContent = `${data.location_stats.latitude_range[0].toFixed(4)} to ${data.location_stats.latitude_range[1].toFixed(4)}`;
+        document.getElementById('avgMeasurement').textContent = `${data.location_stats.measurement_avg.toFixed(2)} feet`;
+
+        // Simple bar chart for ranges
+        const ctx = document.getElementById('statsChart').getContext('2d');
+        const statsChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Longitude Range', 'Latitude Range', 'Avg Measurement'],
+                datasets: [{
+                    label: 'Value',
+                    data: [
+                        data.location_stats.longitude_range[1] - data.location_stats.longitude_range[0],
+                        data.location_stats.latitude_range[1] - data.location_stats.latitude_range[0],
+                        data.location_stats.measurement_avg
+                    ],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 205, 86, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 205, 86, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

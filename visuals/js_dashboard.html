@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Squirrel Dashboard - JavaScript</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            width: 30%;
+            float: left;
+            margin: 1%;
+        }
+        .clearfix {
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+    <h1>Squirrel Census Dashboard - JavaScript Chart.js</h1>
+    
+    <div class="chart-container">
+        <h3>Fur Colors</h3>
+        <canvas id="furChart"></canvas>
+    </div>
+    
+    <div class="chart-container">
+        <h3>Ages</h3>
+        <canvas id="ageChart"></canvas>
+    </div>
+    
+    <div class="chart-container">
+        <h3>Activities</h3>
+        <canvas id="activityChart"></canvas>
+    </div>
+    
+    <div class="clearfix"></div>
+    
+    <div class="chart-container">
+        <h3>Measurements</h3>
+        <canvas id="measurementChart"></canvas>
+    </div>
+    
+    <div class="chart-container">
+        <h3>Color Combinations</h3>
+        <canvas id="colorComboChart"></canvas>
+    </div>
+    
+    <div class="chart-container">
+        <h3>Shift Distribution</h3>
+        <canvas id="shiftChart"></canvas>
+    </div>
+
+    <script>
+        // Sample data (in real implementation, this would be loaded from JSON)
+        const data = {
+            fur_colors: {"Gray": 2473, "Cinnamon": 392, "Black": 103, "None": 55},
+            ages: {"Adult": 2561, "Juvenile": 330, "None": 132},
+            activities: {"Running": 1467, "Eating": 1096, "Foraging": 1024, "Climbing": 851, "Chasing": 456},
+            measurements: [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100],
+            color_combos: {"Gray-": 1800, "Gray-White": 400, "Cinnamon-": 300, "Black-": 80},
+            shifts: {"AM": 1512, "PM": 1511}
+        };
+
+        // Fur Color Bar Chart
+        const furCtx = document.getElementById('furChart').getContext('2d');
+        new Chart(furCtx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(data.fur_colors),
+                datasets: [{
+                    data: Object.values(data.fur_colors),
+                    backgroundColor: ['#808080', '#D2691E', '#000000', '#FFFFFF']
+                }]
+            },
+            options: { plugins: { legend: { display: false } } }
+        });
+
+        // Age Pie Chart
+        const ageCtx = document.getElementById('ageChart').getContext('2d');
+        new Chart(ageCtx, {
+            type: 'pie',
+            data: {
+                labels: Object.keys(data.ages),
+                datasets: [{
+                    data: Object.values(data.ages),
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+                }]
+            }
+        });
+
+        // Activities Bar Chart
+        const activityCtx = document.getElementById('activityChart').getContext('2d');
+        new Chart(activityCtx, {
+            type: 'horizontalBar',
+            data: {
+                labels: Object.keys(data.activities),
+                datasets: [{
+                    data: Object.values(data.activities),
+                    backgroundColor: '#4BC0C0'
+                }]
+            },
+            options: { plugins: { legend: { display: false } } }
+        });
+
+        // Measurements Histogram (simplified)
+        const measurementCtx = document.getElementById('measurementChart').getContext('2d');
+        new Chart(measurementCtx, {
+            type: 'bar',
+            data: {
+                labels: data.measurements,
+                datasets: [{
+                    data: [50, 200, 400, 600, 500, 300, 150, 80, 40, 20, 10, 5, 2, 1, 0, 0, 0, 0, 0, 0, 0],
+                    backgroundColor: '#9966FF'
+                }]
+            },
+            options: { plugins: { legend: { display: false } } }
+        });
+
+        // Color Combinations Doughnut
+        const colorCtx = document.getElementById('colorComboChart').getContext('2d');
+        new Chart(colorCtx, {
+            type: 'doughnut',
+            data: {
+                labels: Object.keys(data.color_combos),
+                datasets: [{
+                    data: Object.values(data.color_combos),
+                    backgroundColor: ['#808080', '#A0A0A0', '#D2691E', '#000000']
+                }]
+            }
+        });
+
+        // Shift Distribution
+        const shiftCtx = document.getElementById('shiftChart').getContext('2d');
+        new Chart(shiftCtx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(data.shifts),
+                datasets: [{
+                    data: Object.values(data.shifts),
+                    backgroundColor: ['#FF9F40', '#FF6384']
+                }]
+            },
+            options: { plugins: { legend: { display: false } } }
+        });
+    </script>
+</body>
+</html>

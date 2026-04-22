@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fur Color Bar Chart - JavaScript</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Fur Color Distribution (JavaScript Chart.js)</h1>
+    <canvas id="furColorChart" width="400" height="200"></canvas>
+    <script>
+        // Data from Python export
+        const data = {
+            "fur_colors": {"Gray": 2473, "Cinnamon": 392, "Black": 103, "None": 55}
+        };
+
+        const ctx = document.getElementById('furColorChart').getContext('2d');
+        const furColorChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(data.fur_colors),
+                datasets: [{
+                    label: 'Count',
+                    data: Object.values(data.fur_colors),
+                    backgroundColor: [
+                        'rgba(128, 128, 128, 0.6)',
+                        'rgba(210, 105, 30, 0.6)',
+                        'rgba(0, 0, 0, 0.6)',
+                        'rgba(255, 255, 255, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(128, 128, 128, 1)',
+                        'rgba(210, 105, 30, 1)',
+                        'rgba(0, 0, 0, 1)',
+                        'rgba(255, 255, 255, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

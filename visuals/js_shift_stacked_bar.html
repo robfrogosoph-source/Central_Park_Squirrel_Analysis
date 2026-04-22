@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shift vs Fur Color Stacked Bar - JavaScript</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Fur Colors by Shift (AM/PM) - JavaScript Chart.js</h1>
+    <canvas id="shiftFurChart" width="400" height="200"></canvas>
+    <script>
+        // Data from Python export
+        const data = {
+            "shift_fur_colors": {
+                "AM": {"Gray": 1234, "Cinnamon": 198, "Black": 52, "None": 28},
+                "PM": {"Gray": 1239, "Cinnamon": 194, "Black": 51, "None": 27}
+            }
+        };
+
+        const shifts = Object.keys(data.shift_fur_colors);
+        const colors = Object.keys(data.shift_fur_colors.AM);
+
+        const datasets = colors.map(color => ({
+            label: color,
+            data: shifts.map(shift => data.shift_fur_colors[shift][color] || 0),
+            backgroundColor: color === 'Gray' ? 'rgba(128, 128, 128, 0.6)' :
+                           color === 'Cinnamon' ? 'rgba(210, 105, 30, 0.6)' :
+                           color === 'Black' ? 'rgba(0, 0, 0, 0.6)' :
+                           'rgba(255, 255, 255, 0.6)',
+            borderColor: color === 'Gray' ? 'rgba(128, 128, 128, 1)' :
+                        color === 'Cinnamon' ? 'rgba(210, 105, 30, 1)' :
+                        color === 'Black' ? 'rgba(0, 0, 0, 1)' :
+                        'rgba(255, 255, 255, 1)',
+            borderWidth: 1
+        }));
+
+        const ctx = document.getElementById('shiftFurChart').getContext('2d');
+        const shiftFurChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: shifts,
+                datasets: datasets
+            },
+            options: {
+                scales: {
+                    x: {
+                        stacked: true
+                    },
+                    y: {
+                        stacked: true,
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
